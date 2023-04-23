@@ -64,14 +64,11 @@
       </div>
     </div>
     <div v-if="detailData.qr_code" class="code-box">
-      <div class="activity-code">
-        <div class="title">活动编号</div>
-        <div class="code">{{ detailData.t_number }}</div>
-        <p class="desc">
-          活动现场出示活动编号可便于活动现场签到/领取物资
-        </p>
-        <p class="desc group">活动群</p>
-      </div>
+      <ActivityCode
+        v-if="detailData.t_number"
+        :code="detailData.t_number"
+      />
+      <p class="group">活动群</p>
       <img :src="detailData.qr_code" class="code-path">
       <div class="code-hint">
         识别二维码加入<span class="high">活动讨论群</span>谨慎接受群友的好友添加请求，避免个人信息泄露及被骚扰。
@@ -94,10 +91,12 @@
 <script>
 // import { mapGetters } from 'vuex'
 import { Image, Icon, Popup, Toast } from 'vant'
+import ActivityCode from './activityCode.vue'
 import { orderDetail } from '@/api/order'
 export default {
   name: 'Details',
   components: {
+    ActivityCode,
     [Image.name]: Image,
     [Popup.name]: Popup,
     [Icon.name]: Icon
@@ -337,36 +336,18 @@ export default {
     }
 }
 .code-box {
-    .activity-code {
-        text-align: center;
-        transform: translateY(-16px);
-        .title {
-            font-size: 14px;
-            font-weight: 700;
-        }
-
-        .code {
-            font-size: 32px;
-            color: #21cab2;
-            margin: 8px 0;
-        }
-        .desc {
-        font-weight: bold;
-            color: rgba(51, 51, 51, 1);
-
-            &.group {
-              margin-top: 20px;
-              font-size: 14px;
-            }
-        }
-    }
-
     width: 355px;
     background: rgba(255, 255, 255, 1);
     border: 1px solid rgba(222, 222, 222, 1);
     border-radius: 6px;
     margin: 8px auto;
     padding-top: 40px;
+
+    .code-wrapper {
+        display: flex;
+        text-align: center;
+    }
+
     .code-path {
         width: 90px;
         height: 90px;
@@ -383,6 +364,13 @@ export default {
         .high {
             color: @theme-color;
         }
+    }
+
+    .group {
+        text-align: center;
+        font-size: 14px;
+        font-weight: 700;
+        margin-bottom: 8px;
     }
 }
 .van-popup {

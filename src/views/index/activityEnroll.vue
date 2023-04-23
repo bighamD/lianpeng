@@ -25,9 +25,9 @@
           >{{ contacts.length }}*{{ periodData.money }}</span>
         </div>
       </div>
-      <div class="min-join" v-if="periodData.min_join_count > 0">
+      <div v-if="periodData.min_join_count > 0" class="min-join">
         活动最低{{ periodData.min_join_count }}人起报名，请添加{{
-          periodData.min_join_count 
+          periodData.min_join_count
         }}名以上出行人
       </div>
       <div class="info-box">

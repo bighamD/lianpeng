@@ -10,8 +10,10 @@ import { Lazyload } from 'vant'
 
 if (process.env.NODE_ENV === 'development') {
   try {
-    require('vconsole')()
-  } catch (error) {}
+    const VConsole = require('vconsole')
+    new VConsole()
+  } catch (error) {
+  }
 }
 
 Vue.use(Lazyload)

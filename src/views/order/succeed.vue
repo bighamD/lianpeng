@@ -1,18 +1,14 @@
 <template>
   <div class="page">
     <div v-if="orderStatus == 1 && orderInfo" class="code-box">
-
       <div class="code-text">
         报名成功，你报名了{{ orderInfo.member.length }}人
       </div>
-      <div class="activity-code">
-        <div class="title">活动编号</div>
-        <div class="code">{{ orderInfo.t_number }}</div>
-        <p class="desc">
-          活动现场出示活动编号可便于活动现场签到/领取物资
-        </p>
-        <p class="desc group">活动群</p>
-      </div>
+      <ActivityCode
+        v-if="orderInfo.t_number"
+        :code="orderInfo.t_number"
+      />
+      <p class="group">活动群</p>
       <img class="code-path" :src="orderInfo.qr_code">
       <div class="code-hint">
         识别二维码加入<span class="high">活动讨论群</span>谨慎接受群友的好友添加请求，避免个人信息泄露及被骚扰。
@@ -55,10 +51,12 @@
 // import { mapGetters } from 'vuex'
 import { Icon, Toast } from 'vant'
 import { orderDetail } from '@/api/order'
+import ActivityCode from './activityCode.vue'
 
 export default {
   name: 'Succeed',
   components: {
+    ActivityCode,
     [Icon.name]: Icon
   },
   filters: {},
@@ -109,28 +107,6 @@ export default {
 
 <style lang="less" scoped>
 .code-box {
-  .activity-code {
-        text-align: center;
-        .title {
-            font-size: 14px;
-            font-weight: 700;
-        }
-
-        .code {
-            font-size: 32px;
-            color: #21cab2;
-            margin: 8px 0;
-        }
-        .desc {
-        font-weight: bold;
-            color: rgba(51, 51, 51, 1);
-
-            &.group {
-              margin-top: 20px;
-              font-size: 14px;
-            }
-        }
-    }
     width: 355px;
     background: rgba(255, 255, 255, 1);
     border: 1px solid rgba(222, 222, 222, 1);
@@ -159,6 +135,13 @@ export default {
         .high {
             color: @theme-color;
         }
+    }
+
+    .group {
+        text-align: center;
+        font-size: 14px;
+        font-weight: 700;
+        margin-bottom: 8px;
     }
 }
 .succeed-box {
